@@ -1,0 +1,98 @@
+spring:
+  application:
+    name: land-management-system
+
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/land_management_system?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: false
+
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+  flyway:
+    enabled: true 
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+
+  servlet:
+    context-path: /api
+
+  error:
+    include-message: always
+    include-stacktrace: on-param
+    include-exception: false
+
+logging:
+  level:
+    root: INFO
+    com.landmanagement: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate: WARN
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+app:
+  jwt:
+    secret: dev-secret-change-me-in-production-very-important-key-for-security
+    expiration: 86400000
+
+  uploads:
+    dir: ./data/uploads
+    max-file-size: 52428800
+
+    allowed-mime-types:
+      - application/pdf
+      - image/jpeg
+      - image/png
+      - text/plain
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+      base-path: /actuator
+
+  endpoint:
+    health:
+      show-details: when-authorized
+
+      probes:
+        enabled: true
+
+  metrics:
+    export:
+      simple:
+        enabled: true
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true

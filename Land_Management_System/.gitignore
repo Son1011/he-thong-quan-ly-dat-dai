@@ -1,0 +1,70 @@
+# ===== OS / Editor =====
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+.vscode/
+.idea/
+*.iml
+
+# ===== Secrets / env files =====
+.env
+.env.*
+!.env.example
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyd
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+.venv/
+venv/
+env/
+
+*.egg-info/
+dist/
+build/
+
+*.log
+
+# ===== Node / Vite (frontend) =====
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+coverage/
+
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ===== SQLite temp files (KEEP main DB) =====
+*.db-journal
+*.db-wal
+*.db-shm
+
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Keep the shared SQLite DB in git (per requirement)
+!backend/data/app.db
+
+# ===== App-specific =====
+# User uploads should not be committed
+
+# This appears to be an empty directory accidentally named like a DB file
+backend/app.db/
+
+# ===== Docker =====
+docker-compose.override.yml
+
+backend/target/

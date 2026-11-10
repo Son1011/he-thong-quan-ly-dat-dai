@@ -1,0 +1,8 @@
+target/
+data/
+.git/
+.env
+.env.*
+*.log
+node_modules/
+package-lock.json

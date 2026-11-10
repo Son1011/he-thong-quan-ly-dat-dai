@@ -1,0 +1,1156 @@
+{
+	"info": {
+		"_postman_id": "60d2a5eb-9512-4521-8ddc-4b7a30056fb8",
+		"name": "Backend Land Management System API",
+		"description": "Postman collection generated from API listing for Backend Land Management System. Update collection variables before running.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46809419",
+		"_collection_link": "https://cloudy-rocket-414961.postman.co/workspace/Chi%E1%BA%BFn-B%C3%B9i's-Workspace~8ea20056-d7a2-4a7f-826a-4b6791fd107d/collection/46809419-60d2a5eb-9512-4521-8ddc-4b7a30056fb8?action=share&source=collection_link&creator=46809419"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login - save accessToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const json = pm.response.json();",
+									"",
+									"if (json.access_token) {",
+									"    pm.environment.set(\"accessToken\", json.access_token);",
+									"}",
+									"",
+									"if (json.accessToken) {",
+									"    pm.environment.set(\"accessToken\", json.accessToken);",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current user - /auth/me",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/auth/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"old_password\": \"admin123\",\n  \"new_password\": \"admin1234\",\n  \"confirm_password\": \"admin1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Me",
+			"item": [
+				{
+					"name": "Get current user - /me",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/me",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dossiers",
+			"item": [
+				{
+					"name": "Create dossier",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Hồ sơ test submit\",\n  \"description\": \"Test submit hồ sơ\",\n  \"origin_unit_id\": 3,\n  \"dossier_type_id\": 1,\n  \"citizen_name\": \"Nguyễn Văn A\",\n  \"citizen_identity_number\": \"012345678901\",\n  \"citizen_phone\": \"0912345678\",\n  \"citizen_address\": \"Phường A, Quận B, Tỉnh C\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/dossiers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List dossiers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dossiers/central/decisions?page={{page}}&size={{size}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers",
+								"central",
+								"decisions"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PENDING",
+									"disabled": true
+								},
+								{
+									"key": "unit_id",
+									"value": "{{unitId}}",
+									"disabled": true
+								},
+								{
+									"key": "include_children",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "sent_to_central",
+									"value": "false",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "{{page}}"
+								},
+								{
+									"key": "size",
+									"value": "{{size}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get dossier detail",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/dossiers/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dossiers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dossier action - approve",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"approve\",\n  \"note\": \"Duyệt hồ sơ từ Postman\",\n  \"signatureBase64Png\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/dossiers/{{dossierId}}/actions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers",
+								"{{dossierId}}",
+								"actions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dossier action - return",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"RETURN\",\n  \"note\": \"Hồ sơ thiếu giấy tờ, cần bổ sung thông tin công dân\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/dossiers/{{dossierId}}/actions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers",
+								"{{dossierId}}",
+								"actions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dossier action - escalate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"escalate\",\n  \"note\": \"Chuyển hồ sơ lên cấp trên từ Postman\",\n  \"signatureBase64Png\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/dossiers/{{dossierId}}/actions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers",
+								"{{dossierId}}",
+								"actions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dossier action - submit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"action\": \"SUBMIT\",\n  \"note\": \"Đã bổ sung hồ sơ và gửi lại cấp tỉnh\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/dossiers/{{dossierId}}/actions",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers",
+								"{{dossierId}}",
+								"actions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Inbox",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dossiers/inbox?page={{page}}&size={{size}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers",
+								"inbox"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "{{page}}"
+								},
+								{
+									"key": "size",
+									"value": "{{size}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Central decisions",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dossiers/central/decisions?page={{page}}&size={{size}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers",
+								"central",
+								"decisions"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "{{page}}"
+								},
+								{
+									"key": "size",
+									"value": "{{size}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attachments",
+			"item": [
+				{
+					"name": "Upload attachment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Bui Chien/OneDrive/Documents/approval_history_full_detail.xlsx"
+								},
+								{
+									"key": "",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								},
+								{
+									"key": "",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/dossiers/{{dossierId}}/attachments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers",
+								"{{dossierId}}",
+								"attachments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List attachments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dossiers/{{dossierId}}/attachments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers",
+								"{{dossierId}}",
+								"attachments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download attachment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/dossiers/4/attachments/2/download",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"dossiers",
+								"4",
+								"attachments",
+								"2",
+								"download"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download legacy attachment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/attachments/2/download",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"attachments",
+								"2",
+								"download"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Approval History",
+			"item": [
+				{
+					"name": "Get approval history",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dossiers/{{dossierId}}/history",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dossiers",
+								"{{dossierId}}",
+								"history"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin - Audit Logs",
+			"item": [
+				{
+					"name": "Audit logs by dossier",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/audit-logs/dossier/{{dossierId}}?page={{page}}&size={{size}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"audit-logs",
+								"dossier",
+								"{{dossierId}}"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "{{page}}"
+								},
+								{
+									"key": "size",
+									"value": "{{size}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Audit logs by user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/audit-logs/user/4?page={{page}}&size={{size}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"audit-logs",
+								"user",
+								"4"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "{{page}}"
+								},
+								{
+									"key": "size",
+									"value": "{{size}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Audit logs by action",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/audit-logs/by-action/RETURN?page={{page}}&size={{size}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"audit-logs",
+								"by-action",
+								"RETURN"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "{{page}}"
+								},
+								{
+									"key": "size",
+									"value": "{{size}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin - Users",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser04\",\n  \"password\": \"admin123\",\n  \"full_name\": \"Nguyễn Văn Test\",\n  \"email\": \"testuser04@example.com\",\n  \"role\": \"COMMUNE_OFFICER\",\n  \"unit_id\": 3,\n  \"must_change_password\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/users?page={{page}}&size={{size}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "role",
+									"value": "COMMUNE_OFFICER",
+									"disabled": true
+								},
+								{
+									"key": "unitId",
+									"value": "{{unitId}}",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "{{page}}"
+								},
+								{
+									"key": "size",
+									"value": "{{size}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fullName\": \"Updated Test User\",\n  \"email\": \"updated@example.com\",\n  \"phoneNumber\": \"0911111111\",\n  \"address\": \"Updated address\",\n  \"role\": \"COMMUNE_OFFICER\",\n  \"unitId\": \"{{unitId}}\",\n  \"isActive\": true,\n  \"mustChangePassword\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/users/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Units",
+			"item": [
+				{
+					"name": "Create unit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Đơn vị test\",\n  \"level\": \"COMMUNE\",\n  \"kind\": \"WARD\",\n  \"parentId\": \"{{provinceId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/units",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"units"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List provinces",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/units/provinces",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"units",
+								"provinces"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List unit children",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/units/{{unitId}}/children",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"units",
+								"{{unitId}}",
+								"children"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Statistics",
+			"item": [
+				{
+					"name": "Stats provinces",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats/provinces",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats",
+								"provinces"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Stats province children",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/stats/provinces/{{provinceId}}/children",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"stats",
+								"provinces",
+								"{{provinceId}}",
+								"children"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test('Status code is not 500', function () {",
+					"    pm.expect(pm.response.code).to.not.equal(500);",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/api"
+		},
+		{
+			"key": "username",
+			"value": "admin"
+		},
+		{
+			"key": "password",
+			"value": "123456"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		},
+		{
+			"key": "dossierId",
+			"value": "4"
+		},
+		{
+			"key": "attachmentId",
+			"value": "1"
+		},
+		{
+			"key": "userId",
+			"value": "1"
+		},
+		{
+			"key": "unitId",
+			"value": "1"
+		},
+		{
+			"key": "provinceId",
+			"value": "1"
+		},
+		{
+			"key": "actionType",
+			"value": "LOGIN"
+		},
+		{
+			"key": "page",
+			"value": "0"
+		},
+		{
+			"key": "size",
+			"value": "10"
+		}
+	]
+}
